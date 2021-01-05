@@ -55,8 +55,8 @@ jobs:
               tag: ${{ env.TAG }}
             ingress:
               hosts:
-                - host: kubernetes-versioning.jeroenboesten.nl/${{ env.MAJOR_VERSION }}
+                - host: kubernetes-versioning.jeroenboesten.nl
                   paths:
-                    - /
+                    - /${{ env.MAJOR_VERSION }}
         env:
           KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
