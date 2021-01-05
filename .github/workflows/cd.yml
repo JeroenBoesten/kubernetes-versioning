@@ -41,25 +41,23 @@ jobs:
         with:
           args: push jeroenboesten/kubernetes-versioning:$TAG
 
-#      # Deploy helm to kubernetes
-#      - name: Deploy to Kubernetes
-#        uses: './.github/actions/helm-delivery'
-#        with:
-#          release: '${{ env.RELEASE }}'
-#          namespace: '${{ env.MAJOR_VERSION }}'
-#          version: '${{ env.TAG }}'
-#          chart: 'kubernetes-versioning'
-#          token: '${{ github.token }}'
-#          helm: helm3
-#          values: |
-#            image:
-#              tag: ${{ env.TAG }}
-#            ingress:
-#              hosts:
-#                - host: '${{ env.HOST }}'
-#                  paths:
-#                  - /
-#        env:
-#          KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
-
-
+      # Deploy helm to kubernetes
+      - name: Deploy to Kubernetes
+        uses: './.github/actions/helm-delivery'
+        with:
+          release: '${{ env.RELEASE }}'
+          namespace: '${{ env.MAJOR_VERSION }}'
+          version: '${{ env.TAG }}'
+          chart: 'kubernetes-versioning'
+          token: '${{ github.token }}'
+          helm: helm3
+          values: |
+            image:
+              tag: ${{ env.TAG }}
+            ingress:
+              hosts:
+                - host: '${{ env.HOST }}'
+                  paths:
+                  - /
+        env:
+          KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
