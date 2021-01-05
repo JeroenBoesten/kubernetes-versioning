@@ -25,7 +25,7 @@ jobs:
       - name: Set major version
         run: echo "MAJOR_VERSION=v${{ steps.version.outputs.major }}" >> $GITHUB_ENV
       - name: Subtract
-        run: echo "DELETE_VERSION=$((${{ github.event.inputs.majorVersion }}-2))" >> $GITHUB_ENV
+        run: echo "DELETE_VERSION=$((${{ steps.version.outputs.major }}-2))" >> $GITHUB_ENV
 
       # Set tag as env variable
       - name: Set tag as env variable
@@ -70,7 +70,7 @@ jobs:
         uses: './.github/actions/helm-delivery'
         with:
           task: 'remove'
-          release: '${{ env.DELETE_VERSION }}'
+          release: 'v${{ env.DELETE_VERSION }}'
           namespace: '${{ env.NAMESPACE }}'
           version: '${{ env.TAG }}'
           chart: 'kubernetes-versioning'
