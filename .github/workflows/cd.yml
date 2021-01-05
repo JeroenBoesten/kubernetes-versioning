@@ -53,9 +53,10 @@ jobs:
           values: |
             image:
               tag: ${{ env.TAG }}
-            hosts:
-              - host: kubernetes-versioning.jeroenboesten.nl/${{ env.MAJOR_VERSION }}
-                paths:
-                  - /
+            ingress:
+              hosts:
+                - host: kubernetes-versioning.jeroenboesten.nl/${{ env.MAJOR_VERSION }}
+                  paths:
+                    - /
         env:
           KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
