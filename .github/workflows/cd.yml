@@ -32,7 +32,7 @@ jobs:
 
       # Build the images with the computed tag
       - name: Build App Image
-        run: docker build --file ./devops/next-cms/Dockerfile --tag jeroenboesten/kubernetes-versioning:$TAG .
+        run: docker build --file ./devops/nginx/Dockerfile --tag jeroenboesten/kubernetes-versioning:$TAG .
 
       # Push the images to the docker hub
       - name: Push App to docker hub
