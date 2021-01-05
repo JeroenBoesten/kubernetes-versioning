@@ -12,7 +12,7 @@ jobs:
     runs-on: [ubuntu-latest]
     steps:
       - name: Subtract
-        run: echo "DELETE_VERSION=${{ github.event.inputs.majorVersion - 2 }}" >> $GITHUB_ENV
+        run: echo "DELETE_VERSION=$((${{ github.event.inputs.majorVersion }}-2))" >> $GITHUB_ENV
       - name: Delete
         if: ${{ DELETE_VERSION > 0 }}
         run: |
