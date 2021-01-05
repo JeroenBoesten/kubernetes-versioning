@@ -44,7 +44,7 @@ jobs:
       - name: Deploy to Kubernetes
         uses: './.github/actions/helm-delivery'
         with:
-          release: '${{ env.MAJOR_VERSION }}'
+          release: '"${{ env.MAJOR_VERSION }}"'
           namespace: '${{ env.NAMESPACE }}'
           version: '${{ env.TAG }}'
           chart: 'kubernetes-versioning'
