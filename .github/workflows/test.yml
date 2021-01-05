@@ -1,0 +1,18 @@
+name: Playground Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      majorVersion:
+        description: 'App version'
+        required: true
+
+jobs:
+  test:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Delete
+        if: ${{ github.event.inputs.majorVersion - 2 > 0 }}
+        run: |
+          echo "Foobar"
+
