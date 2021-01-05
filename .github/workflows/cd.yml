@@ -1,0 +1,65 @@
+name: CD
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  deploy-to-kubernetes:
+    runs-on: [ubuntu-latest]
+    env:
+      NAMESPACE: 'test'
+      HOST: 'kubernetes'
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Login to docker registry
+        uses: actions-hub/docker/login@master
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_TOKEN }}
+      - name: Process tag version
+        id: version
+        uses: ncipollo/semantic-version-action@v1
+      - name: Set major version
+        run: echo "MAJOR_VERSION=${{ steps.version.outputs.major }}" >> $GITHUB_ENV
+
+      # Set tag as env variable
+      - name: Set tag as env variable
+        run: echo "TAG=${GITHUB_REF:10}" >> $GITHUB_ENV
+
+      # Build the images with the computed tag
+      - name: Build App Image
+        run: docker build --file ./devops/next-cms/Dockerfile --tag jeroenboesten/kubernetes-versioning:$TAG .
+
+      # Push the images to the docker hub
+      - name: Push App to docker hub
+        if: success()
+        uses: actions-hub/docker@master
+        with:
+          args: push jeroenboesten/kubernetes-versioning:$TAG
+
+#      # Deploy helm to kubernetes
+#      - name: Deploy to Kubernetes
+#        uses: './.github/actions/helm-delivery'
+#        with:
+#          release: '${{ env.RELEASE }}'
+#          namespace: '${{ env.MAJOR_VERSION }}'
+#          version: '${{ env.TAG }}'
+#          chart: 'kubernetes-versioning'
+#          token: '${{ github.token }}'
+#          helm: helm3
+#          values: |
+#            image:
+#              tag: ${{ env.TAG }}
+#            ingress:
+#              hosts:
+#                - host: '${{ env.HOST }}'
+#                  paths:
+#                  - /
+#        env:
+#          KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
+
+
