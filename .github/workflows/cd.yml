@@ -67,7 +67,7 @@ jobs:
       - name: Remove old release from Kubernetes
         if: ${{ env.DELETE_VERSION > 0 }}
 #        continue-on-error: true
-        uses: './.github/actions/helm-delivery'
+        uses: 'deliverybot/helm@v1.7.0'
         with:
           task: 'remove'
           release: 'v${{ env.DELETE_VERSION }}'
