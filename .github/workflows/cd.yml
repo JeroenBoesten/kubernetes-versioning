@@ -44,7 +44,7 @@ jobs:
 
       # Deploy helm to kubernetes
       - name: Deploy to Kubernetes
-        uses: './.github/actions/helm-delivery'
+        uses: 'deliverybot/helm@v1.7.0'
         with:
           release: '${{ env.MAJOR_VERSION }}'
           namespace: '${{ env.NAMESPACE }}'
