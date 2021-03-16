@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: TEST
-        run: echo ${{ github.event_name }}
+        run: echo ${{ github.ref }}
 
 #  setup_env:
 #    name: Setup environment settings
@@ -29,8 +29,8 @@ jobs:
 #        if: github.ref == 'refs/heads/develop'
 #        run: echo "RELEASE=dev" >> environment-settings.txt
 #      - name: Set release to playground
-#        if: github.ref == 'refs/heads/develop'
-#        run: echo "RELEASE=dev" >> environment-settings.txt
+#        if: github.event_name == 'workflow_dispatch'
+#        run: echo "RELEASE=playground" >> environment-settings.txt
 #
 #
 #      # Upload environment settings
@@ -39,7 +39,7 @@ jobs:
 #        with:
 #          name: environment-settings
 #          path: environment-settings.txt
-#
+
 #  job_1:
 #    name: Add 3 and 7
 #    runs-on: ubuntu-latest
